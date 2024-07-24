@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,7 +19,6 @@ INSTALLED_APPS = [
     'apps.apps.AppsConfig',
     "corsheaders",
 
-
     'allauth',
     'allauth.account',
 
@@ -31,8 +31,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.linkedin_oauth2',
     'allauth.socialaccount.providers.instagram',
-
-
 
 ]
 
@@ -112,7 +110,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR / 'static')
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -197,39 +197,3 @@ CSRF_TRUSTED_ORIGINS = [
     "https://15be-178-218-201-17.ngrok-free.app",
     "http://localhost:8000",
 ]
-
-
-"""
-[Unit]
-Description=Django CI/CD project daemon
-After=network.target
-
-[Service]
-WorkingDirectory=/var/www/samariddins_project/project1/backend
-ExecStart=/var/www/samariddins_project/project1/backend/.venv/bin/gunicorn --workers 1 --bind unix:/var/www/samariddins_project/project1/backend/backend.sock root.wsgi:application
-
-[Install]
-WantedBy=multi-user.target
-"""
-
-"""config file 
-server {
-    listen       8080;
-    server_name  146.190.85.59;
-
-    location = /favicon.ico { access_log off; log_not_found off; }
-
-    location /static/ {
-        root /var/www/samariddins_project/project1/backend;
-    }
-
-    location /media/ {
-        root /var/www/samariddins_project/project1/backend;
-    }
-
-    location / {
-        include proxy_params;
-        proxy_pass http://unix:/var/www/samariddins_project/project1/backend/backend.sock;
-    }
-}
-"""
